@@ -13,7 +13,7 @@ import GooglePlaces
 public typealias YAPlacePickerOnComplete = (GMSPlace?) -> ()
 
 public class YAPlacePickerBuilder {
-    weak var baseVC: UIViewController?
+    weak var baseVC: UINavigationController?
     var completion: YAPlacePickerOnComplete!
     private(set) var searchPlaceholder: String! = "Search for place"
     private(set) var chooseButtonTitle: String! = "Choose"
@@ -21,7 +21,7 @@ public class YAPlacePickerBuilder {
     
     private(set) var gmsApiKey : String!
     
-    public init(baseVC: UIViewController, gmsApiKey: String, completion: @escaping YAPlacePickerOnComplete) {
+    public init(baseVC: UINavigationController, gmsApiKey: String, completion: @escaping YAPlacePickerOnComplete) {
         self.baseVC = baseVC
         self.gmsApiKey = gmsApiKey
         self.completion = completion
