@@ -297,7 +297,12 @@ extension YAPlacePickerVC: CLLocationManagerDelegate {
 extension YAPlacePickerVC: PlaceInfoViewDelegate {
     public func placeChoosen(place: GMSPlace) {
         completion(place)
-        dismiss(animated: true)
+        
+        if let myNavigationController = self.navigationController {
+            myNavigationController.popViewController(animated: true)
+        } else {
+            dismiss(animated: true)
+        }
     }
 }
 
