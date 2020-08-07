@@ -52,8 +52,8 @@ public class YAPlacePickerBuilder {
         vc.searchPlaceholderText = searchPlaceholder
         vc.chooseButtonText = chooseButtonTitle
         vc.chooseButtonColor = chooseButtonColor
-        if (baseVC.navigationController) {
-            baseVC.navigationController.pushViewController(vc, animated: true)
+        if (baseVC?.navigationController != nil) {
+            baseVC?.navigationController?.pushViewController(vc, animated: true)
         } else {
             baseVC?.present(vc, animated: true)
         }
