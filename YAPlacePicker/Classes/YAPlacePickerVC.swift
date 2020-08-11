@@ -54,6 +54,8 @@ public class YAPlacePickerVC: UIViewController {
     public var chooseButtonText: String!
     public var chooseButtonColor: UIColor?
     
+    public var gmsApiKey : String!
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         initPlaceInfo()
@@ -254,7 +256,7 @@ public class YAPlacePickerVC: UIViewController {
     }
     
     private func getAddressFromCoordinate(coordinate: CLLocationCoordinate2D) {
-        let url = URL(string: "https://maps.googleapis.com/maps/api/geocode/json?latlng=\(coordinate.latitude),\(coordinate.longitude)&key=\(String(describing: GMSServices.provideAPIKey))")!
+        let url = URL(string: "https://maps.googleapis.com/maps/api/geocode/json?latlng=\(coordinate.latitude),\(coordinate.longitude)&key=\(String(describing: self.gmsApiKey))")!
 
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else { return }
