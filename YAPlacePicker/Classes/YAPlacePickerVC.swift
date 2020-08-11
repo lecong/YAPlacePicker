@@ -256,7 +256,10 @@ public class YAPlacePickerVC: UIViewController {
     }
     
     private func getAddressFromCoordinate(coordinate: CLLocationCoordinate2D) {
+        print(coordinate)
+        print(self.gmsApiKey ?? "empty")
         let url = URL(string: "https://maps.googleapis.com/maps/api/geocode/json?latlng=\(coordinate.latitude),\(coordinate.longitude)&key=\(String(describing: self.gmsApiKey))")!
+        print(url)
 
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else { return }
