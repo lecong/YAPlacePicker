@@ -48,6 +48,7 @@ public class YAPlacePickerBuilder {
         let vc = storyboard.instantiateViewController(withIdentifier: YAPlacePickerVC.storyboardId) as! YAPlacePickerVC
         GMSServices.provideAPIKey(gmsApiKey)
         GMSPlacesClient.provideAPIKey(gmsApiKey)
+        vc.gmsApiKey = gmsApiKey
         vc.completion = completion
         vc.searchPlaceholderText = searchPlaceholder
         vc.chooseButtonText = chooseButtonTitle
