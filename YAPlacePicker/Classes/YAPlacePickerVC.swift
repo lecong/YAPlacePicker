@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 import GoogleMaps
 import GooglePlaces
 import RxSwift
@@ -235,6 +236,39 @@ public class YAPlacePickerVC: UIViewController {
         })
     }
     
+    private func coordinateSelected(coordinate: CLLocationCoordinate2D) {
+        
+        self.getAddressFromCoordinate(coordinate: coordinate)
+        
+        self.searchResults.onNext([])
+        self.eraseSubject.onNext(true)
+        self.searchTextField.text = ""
+        
+        self.clearMarker()
+        
+        let marker = GMSMarker()
+        marker.isDraggable = false
+        marker.position = coordinate
+        marker.map = self.mapView
+        self.placeMarker = marker
+    }
+    
+    private func getAddressFromCoordinate(coordinate: CLLocationCoordinate2D) {
+        let url = URL(string: "https://maps.googleapis.com/maps/api/geocode/json?latlng=\(coordinate.latitude),\(coordinate.longitude)&key=\(String(describing: GMSServices.provideAPIKey))")!
+
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else { return }
+            do {
+                if let array = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String:Any] {
+                    print(array)
+                }
+            } catch {
+                print(error)
+            }
+        }
+        task.resume()
+    }
+    
     private func clearMarker() {
         if let marker = placeMarker {
             marker.map = nil
@@ -309,5 +343,9 @@ extension YAPlacePickerVC: PlaceInfoViewDelegate {
 extension YAPlacePickerVC: GMSMapViewDelegate {
     public func mapView(_ mapView: GMSMapView, didTapPOIWithPlaceID placeID: String, name: String, location: CLLocationCoordinate2D) {
         placeIDSelected(placeID: placeID, moveCamera: false)
+    }
+    
+    public func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        coordinateSelected(coordinate: coordinate)
     }
 }
